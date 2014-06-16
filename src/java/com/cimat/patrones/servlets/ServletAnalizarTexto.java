@@ -26,6 +26,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileItemFactory;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
@@ -38,7 +39,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "ServletAnalizarTexto", urlPatterns = {"/ServletAnalizarTexto"})
 public class ServletAnalizarTexto extends HttpServlet {
     
-    Properties prop;
+    private Properties prop;
     
     
     /**
@@ -55,6 +56,12 @@ public class ServletAnalizarTexto extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
+            Log.log.info("-----------------Values--------------------------------");
+            for(String value: request.getParameterMap().keySet()){
+                Log.log.info(value + ": " + request.getParameterMap().get(value));
+            }
+            
             if(initGate()){
                 
                 request.setAttribute("GateStatus", true);
@@ -67,12 +74,9 @@ public class ServletAnalizarTexto extends HttpServlet {
                 
                 AnalizadorPatrones obj = new AnalizadorPatrones();
                 
-                
                 obj.loadAnalizator("/Config/ANNIE_with_defaults.gapp");
                 obj.addGazetter("/Config/Gazzetter/lists.def");
-            
                 obj.addJape("/Config/main.jape");
-                
                 obj.setDocumentFile(file);
                 
                 obj.execute();
@@ -93,8 +97,7 @@ public class ServletAnalizarTexto extends HttpServlet {
                     if(a != null) {
                         numPromotes += a.size();
                         promotes.put(token,a);
-                    }
-                    
+                    }    
                 }
                 
                 String []i = prop.getProperty("inhibits").split(",");
@@ -113,6 +116,9 @@ public class ServletAnalizarTexto extends HttpServlet {
                     r = "No";
                 }
                 
+                
+                
+                request.setAttribute("question", "The " + file.getName() +" promotes Perfomance? <a href=\"#\">" + r +"</a>");
                 request.setAttribute("promotes", promotes);
                 request.setAttribute("inhibits", inhibits);
                 request.setAttribute("numPromotes", numPromotes);
@@ -124,7 +130,7 @@ public class ServletAnalizarTexto extends HttpServlet {
                 //for te filedownload
                 //response.setContentType("application/octet-stream");
                 //response.setHeader("Content-Disposition","attachment;filename="+file);
-                RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/ViewPatterns.jsp");
                 rd.forward(request, response);
             } else {
                 Log.log.info("Gate no se pudo inicializar");
@@ -134,6 +140,7 @@ public class ServletAnalizarTexto extends HttpServlet {
         } catch (Exception e){
             Log.log.error(getClass(), e);
             request.setAttribute("GateStatus", null);
+            out.print(e);
         }
         finally {
             out.close();
@@ -198,6 +205,10 @@ public class ServletAnalizarTexto extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print("entra get");
+        out.close();
     }
     
     /**
@@ -212,6 +223,10 @@ public class ServletAnalizarTexto extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print("entra post");
+        out.close();
     }
     
     /**
