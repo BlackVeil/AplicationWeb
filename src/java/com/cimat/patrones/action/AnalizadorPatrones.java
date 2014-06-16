@@ -140,11 +140,13 @@ public class AnalizadorPatrones {
     public void writeOutput() {
         OutputStreamWriter out = null;
         try{
+            AnnotationSet defaultAnnots = doc.getAnnotations();
+            String docXMLString = doc.toXml(defaultAnnots,false);
             File outputFile = new File(getClass().getResource("/com/cimat/outxml/output.xml").getFile());
             FileOutputStream fos = new FileOutputStream(outputFile);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             out = new OutputStreamWriter(bos);
-            out.write(doc.toXml());
+            out.write(docXMLString);
             System.out.println("Se genero el archvio output.xml");
         }catch(Exception e){
             e.printStackTrace();

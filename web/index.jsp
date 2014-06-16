@@ -158,7 +158,8 @@
     <body>
         <header id="master-header" class="clearfix" role="banner">
 		<hgroup>
-			<h1 id="site-title"><a href="index.jsp" title="Your Site Name">Orion</a></h1>
+			<h1 id="site-title"><a href="#" title="Your Site Name">Orion</a></h1>
+                        
 		</hgroup>
 
 	</header> <!-- #master-header -->
@@ -168,8 +169,8 @@
 	<nav class="main-navigation clearfix span12" role="navigation">
 		<h3 class="assistive-text">Main menu</h3>
 		<ul>
-			<li class="current"><a href="index.html">Home</a></li>
-			
+			<li class="current"><a href="index.jsp">Home</a></li>
+			<li ><a href="about.jsp">About</a></li>
 		</ul>
 	</nav> <!-- #main-navigation -->
             
@@ -208,7 +209,9 @@
 		<p>
 			Copyright &copy; 2014 <a href="#">Cimat</a>
 			<span class="sep">|</span>
-			Author: <a href="#" title="Design by">María del Rosario Marín Piña</a> version 1.0
+			Author: <a href="#" title="Design by">María del Rosario Marín Piña</a> 
+                        <span class="sep">|</span>
+                        version 1.0
 		</p>
 	</footer> <!-- #footer -->          
       
