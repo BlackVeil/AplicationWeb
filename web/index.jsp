@@ -158,8 +158,7 @@
     <body>
         <header id="master-header" class="clearfix" role="banner">
 		<hgroup>
-			<h1 id="site-title"><a href="#" title="Your Site Name">Orion</a></h1>
-                        
+			<h1 id="site-title"><a href="#" title="Your Site Name">Orion</a></h1>      
 		</hgroup>
 
 	</header> <!-- #master-header -->
